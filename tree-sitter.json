@@ -6,9 +6,7 @@
       "camelcase": "TreeSitterShuttleNotation",
       "title": "Shuttle Notation Tree Sitter",
       "scope": "source.tree_sitter_shuttle_notation",
-      "file-types": [
-        "tree_sitter_shuttle_notation"
-      ],
+      "file-types": ["shuttle"],
       "injection-regex": "^tree_sitter_shuttle_notation$",
       "class-name": "TreeSitterTreeSitterShuttleNotation"
     }
