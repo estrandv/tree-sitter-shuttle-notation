@@ -16,7 +16,21 @@
   TODO:
   - Forgot about '*' as included in suffixes
     - ... and that sections can have suffixes
+    - And that args have operators
+    - And that maybe, just maybe, we might want to introduce referencial arg1=arg2 notation
 
+
+  HANDLING BILLBOARD
+  - root
+    - command_section (multiline)
+    - filter_section (multiline, I'll stop mentioning that..)
+    - billboard
+      - synth_section
+        - synth_header
+          - name, alias, args, extra args
+        - tracks (alias, shuttle)
+    ... including comments
+  - Something something injections for imports: https://github.com/helix-editor/helix/discussions/2951
 
 */
 

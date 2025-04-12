@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-tree-sitter-shuttle-notation
 HOMEPAGE_URL := https://github.com/estrandv/tree-sitter-shuttle-notation
-VERSION := 0.1.0
+VERSION := 0.1.1
 
 # repository
 SRC_DIR := src
