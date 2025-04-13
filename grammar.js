@@ -35,7 +35,7 @@
 */
 
 module.exports = grammar({
-  name: "LOWER_PARSER_NAME",
+  name: "shuttle",
 
   rules: {
     // choice should apparently favour the first match if applicable
