@@ -78,7 +78,7 @@ module.exports = grammar({
     // Example "join(,)" syntax, where the deliminator is only used in between
     arg_sequence: ($) =>
       seq(choice($.arg, $.arg_value), repeat(seq($.arg_separator, $.arg))),
-    arg: ($) => seq($.arg_name, $.arg_value),
+    arg: ($) => seq($.arg_name, $.arg_value, optional($.arg_name)),
     arg_name: ($) => /[a-zA-Z]+/,
     // Note that this allows "arg.5" or "arg5." which might be a good thing
     arg_value: ($) => /[0-9\.]+/,
