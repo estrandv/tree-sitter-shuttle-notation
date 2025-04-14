@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-tree-sitter-shuttle-notation
-        VERSION "0.1.3"
+        VERSION "0.1.4"
         DESCRIPTION "Tree sitter for shuttle notation"
         HOMEPAGE_URL "https://github.com/estrandv/tree-sitter-shuttle-notation"
         LANGUAGES C)

@@ -277,7 +277,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "arg_name"
+              "name": "arg_suffix"
             },
             {
               "type": "BLANK"
@@ -285,6 +285,10 @@
           ]
         }
       ]
+    },
+    "arg_suffix": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z]+"
     },
     "arg_name": {
       "type": "PATTERN",

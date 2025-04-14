@@ -35,11 +35,20 @@
           "named": true
         },
         {
+          "type": "arg_suffix",
+          "named": true
+        },
+        {
           "type": "arg_value",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "arg_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "arg_sequence",
@@ -63,6 +72,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "arg_suffix",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "full_note",
@@ -188,10 +202,6 @@
   },
   {
     "type": "alternation_marker",
-    "named": true
-  },
-  {
-    "type": "arg_name",
     "named": true
   },
   {

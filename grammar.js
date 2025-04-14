@@ -71,14 +71,14 @@ module.exports = grammar({
     note_separator: ($) => " ",
     raw_note: ($) =>
       seq(optional($.note_prefix), $.note_index, optional($.note_suffix)),
-    // TODO: Alias instead of repeat
     note_prefix: ($) => /[a-zA-Z_]+/,
     note_suffix: ($) => /[a-zA-Z_]+/,
     note_index: ($) => /[0-9]+/,
     // Example "join(,)" syntax, where the deliminator is only used in between
     arg_sequence: ($) =>
       seq(choice($.arg, $.arg_value), repeat(seq($.arg_separator, $.arg))),
-    arg: ($) => seq($.arg_name, $.arg_value, optional($.arg_name)),
+    arg: ($) => seq($.arg_name, $.arg_value, optional($.arg_suffix)),
+    arg_suffix: ($) => /[a-zA-Z]+/,
     arg_name: ($) => /[a-zA-Z]+/,
     // Note that this allows "arg.5" or "arg5." which might be a good thing
     arg_value: ($) => /[0-9\.]+/,
