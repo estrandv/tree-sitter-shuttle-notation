@@ -34,25 +34,43 @@
 
 */
 
+/*
+  TODO:
+  - Is "*" native shuttle? Should it be supported?
+  - '.' should be a valid prefix
+  - Nested sections appears to sometimes break arg highlight
+
+*/
 module.exports = grammar({
   name: "shuttle",
 
   rules: {
-    // choice should apparently favour the first match if applicable
-    root: ($) => $.section,
-    section: ($) =>
-      choice(
+    root: ($) => $.expression,
+    expression: ($) => choice($.alternation_section, $.segment),
+    // A segment or alternation section surrounded by brackets (with possible args after)
+    bracket_section: ($) =>
+      prec(
+        5,
         seq(
           $.section_open,
-          choice($.alternation_section, $.note_sequence),
+          choice($.alternation_section, $.segment),
           $.section_close,
           optional(seq(":", $.arg_sequence)),
         ),
-        choice($.alternation_section, $.note_sequence),
       ),
+    // Two segments separated by an alternation marker
     alternation_section: ($) =>
-      prec.right(
-        seq($.section, repeat1(seq($.alternation_marker, $.note_sequence))),
+      prec(11, seq($.segment, repeat1(seq($.alternation_marker, $.segment)))),
+    // Common enough to warrant its own rule, e.g. : note note (...) note
+    segment: ($) =>
+      prec(
+        10,
+        seq(
+          choice($.bracket_section, $.note_sequence),
+          repeat(
+            seq($.note_separator, choice($.bracket_section, $.note_sequence)),
+          ),
+        ),
       ),
     // NOTE: token-prec can be good for "yes this string contains other things but it's ONLY this"
     alternation_marker: ($) => token(prec(2, " / ")),
@@ -60,15 +78,12 @@ module.exports = grammar({
     section_open: ($) => "(",
     note_sequence: ($) =>
       prec.right(
-        1,
-        seq(
-          // Prec.right should presumably make it choose as long a sequence as possible
-          $.full_note,
-          repeat(seq($.note_separator, $.full_note)),
-        ),
+        12,
+        seq($.full_note, repeat(seq($.note_separator, $.full_note))),
       ),
     full_note: ($) => seq($.raw_note, optional(seq(":", $.arg_sequence))),
     note_separator: ($) => " ",
+    // TODO: More liberal rule needed for 'x' and '.' without index
     raw_note: ($) =>
       seq(optional($.note_prefix), $.note_index, optional($.note_suffix)),
     note_prefix: ($) => /[a-zA-Z_]+/,
