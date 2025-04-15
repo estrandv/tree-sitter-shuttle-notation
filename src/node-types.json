@@ -149,25 +149,6 @@
     "fields": {}
   },
   {
-    "type": "note_sequence",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "full_note",
-          "named": true
-        },
-        {
-          "type": "note_separator",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "note_suffix",
     "named": true,
     "fields": {}
@@ -224,11 +205,11 @@
           "named": true
         },
         {
-          "type": "note_separator",
+          "type": "full_note",
           "named": true
         },
         {
-          "type": "note_sequence",
+          "type": "note_separator",
           "named": true
         }
       ]

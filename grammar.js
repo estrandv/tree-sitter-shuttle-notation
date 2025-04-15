@@ -61,26 +61,20 @@ module.exports = grammar({
     // Two segments separated by an alternation marker
     alternation_section: ($) =>
       prec(11, seq($.segment, repeat1(seq($.alternation_marker, $.segment)))),
-    // Common enough to warrant its own rule, e.g. : note note (...) note
+    // Wraps the commonly occurring "space-separated list of notes or nested sections", e.g. : note note (...) note
     segment: ($) =>
-      prec(
+      prec.right(
         10,
         seq(
-          choice($.bracket_section, $.note_sequence),
-          repeat(
-            seq($.note_separator, choice($.bracket_section, $.note_sequence)),
-          ),
+          choice($.bracket_section, $.full_note),
+          repeat(seq($.note_separator, choice($.bracket_section, $.full_note))),
         ),
       ),
     // NOTE: token-prec can be good for "yes this string contains other things but it's ONLY this"
     alternation_marker: ($) => token(prec(2, " / ")),
     section_close: ($) => ")",
     section_open: ($) => "(",
-    note_sequence: ($) =>
-      prec.right(
-        12,
-        seq($.full_note, repeat(seq($.note_separator, $.full_note))),
-      ),
+
     full_note: ($) => seq($.raw_note, optional(seq(":", $.arg_sequence))),
     note_separator: ($) => " ",
     // TODO: More liberal rule needed for 'x' and '.' without index
