@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-tree-sitter-shuttle-notation"
 description = "Tree sitter for shuttle notation"
-version = "0.1.4"
+version = "0.2.0"
 keywords = ["incremental", "parsing", "tree-sitter", "tree-sitter-shuttle-notation"]
 classifiers = [
   "Intended Audience :: Developers",

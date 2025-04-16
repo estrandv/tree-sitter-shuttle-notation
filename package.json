@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-tree-sitter-shuttle-notation",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Tree sitter for shuttle notation",
   "repository": "https://github.com/estrandv/tree-sitter-shuttle-notation",
   "license": "MIT",
