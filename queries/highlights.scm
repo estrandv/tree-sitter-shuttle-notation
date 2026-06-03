@@ -1,6 +1,18 @@
-(note_prefix) @string
-(note_suffix) @string
-(note_index) @number
-(arg_name) @string
-(arg_value) @number
-(arg_separator) @comment
+; Shuttle Notation syntax highlighting
+
+(prefix) @variable
+(suffix) @variable
+(index) @number
+(number) @number
+
+(arg_name) @property
+(ref) @property.builtin
+
+(operator) @operator
+(repeat "*" @operator)
+
+(info ":" @punctuation.delimiter)
+(args "," @punctuation.delimiter)
+
+(section ["(" ")"] @punctuation.bracket)
+(alternation "/" @operator)

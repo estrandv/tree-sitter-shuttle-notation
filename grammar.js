@@ -1,96 +1,101 @@
 /**
- * @file PARSER_DESCRIPTION
- * @author PARSER_AUTHOR_NAME PARSER_AUTHOR_EMAIL
- * @license PARSER_LICENSE
+ * @file Shuttle Notation grammar for tree-sitter
+ * @author estrandv <emil.strandvik@gmail.com>
+ * @license MIT
  */
 
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
-/*
-  NOTE: More or less feature complete from simple testing.
-  - next step is making a syntax config for zed
-  - official docs are a bit vague: https://zed.dev/docs/extensions/languages
-  - https://github.com/zarifpour/zed-env you can try to match this with the official docs as
-    an example
-
-  TODO:
-  - Forgot about '*' as included in suffixes
-    - ... and that sections can have suffixes
-    - And that args have operators
-    - And that maybe, just maybe, we might want to introduce referencial arg1=arg2 notation
-
-
-  HANDLING BILLBOARD
-  - root
-    - command_section (multiline)
-    - filter_section (multiline, I'll stop mentioning that..)
-    - billboard
-      - synth_section
-        - synth_header
-          - name, alias, args, extra args
-        - tracks (alias, shuttle)
-    ... including comments
-  - Something something injections for imports: https://github.com/helix-editor/helix/discussions/2951
-
-*/
 
 /*
-  TODO:
-  - Is "*" native shuttle? Should it be supported?
-  - '.' should be a valid prefix
-  - Nested sections appears to sometimes break arg highlight
+  Shuttle Notation — see shuttle-notation-python/LANGUAGE_SPEC.md
 
+  This grammar exists for editor highlighting: it parses STRUCTURE and labels
+  nodes. Semantic resolution (argument inheritance, alternation expansion,
+  scale/transpose) is the job of the reference Python parser, not tree-sitter.
+
+  Whitespace model: whitespace is a MEANINGFUL separator, so `extras` is empty.
+  An atomic note (prefix/index/suffix) is internally contiguous — keeping
+  whitespace out of `extras` is what stops `c 4` (two elements) from collapsing
+  into a single note `c4`.
 */
+
 module.exports = grammar({
   name: "shuttle",
 
-  rules: {
-    root: ($) => $.expression,
-    expression: ($) => choice($.alternation_section, $.segment),
-    // A segment or alternation section surrounded by brackets (with possible args after)
-    bracket_section: ($) =>
-      prec(
-        5,
-        seq(
-          $.section_open,
-          choice($.alternation_section, $.segment),
-          $.section_close,
-          optional(seq(":", $.arg_sequence)),
-        ),
-      ),
-    // Two segments separated by an alternation marker
-    alternation_section: ($) =>
-      prec(11, seq($.segment, repeat1(seq($.alternation_marker, $.segment)))),
-    // Wraps the commonly occurring "space-separated list of notes or nested sections", e.g. : note note (...) note
-    segment: ($) =>
-      prec.right(
-        10,
-        seq(
-          choice($.bracket_section, $.full_note),
-          repeat(seq($.note_separator, choice($.bracket_section, $.full_note))),
-        ),
-      ),
-    // NOTE: token-prec can be good for "yes this string contains other things but it's ONLY this"
-    alternation_marker: ($) => token(prec(2, " / ")),
-    section_close: ($) => ")",
-    section_open: ($) => "(",
+  extras: () => [],
 
-    full_note: ($) => seq($.raw_note, optional(seq(":", $.arg_sequence))),
-    note_separator: ($) => " ",
-    // TODO: More liberal rule needed for 'x' and '.' without index
-    raw_note: ($) =>
-      seq(optional($.note_prefix), $.note_index, optional($.note_suffix)),
-    note_prefix: ($) => /[a-zA-Z_]+/,
-    note_suffix: ($) => /[a-zA-Z_]+/,
-    note_index: ($) => /[0-9]+/,
-    // Example "join(,)" syntax, where the deliminator is only used in between
-    arg_sequence: ($) =>
-      seq(choice($.arg, $.arg_value), repeat(seq($.arg_separator, $.arg))),
-    arg: ($) => seq($.arg_name, $.arg_value, optional($.arg_suffix)),
-    arg_suffix: ($) => /[a-zA-Z]+/,
-    arg_name: ($) => /[a-zA-Z]+/,
-    // Note that this allows "arg.5" or "arg5." which might be a good thing
-    arg_value: ($) => /[0-9\.]+/,
-    arg_separator: ($) => ",",
+  conflicts: ($) => [
+    // A `_ws` after an element needs >1 token lookahead: it may continue the
+    // sequence (`_ws _element`) or end it (before `/`, `)`, or EOF).
+    [$._sequence],
+    // Inside a section, a trailing `_ws` may close the body (`(c d e)`) or
+    // begin the next alternation arm (`(c d / e)`).
+    [$._section_body, $.alternation],
+    // After an arm + separator, a `_ws` may start yet another separator or end
+    // the alternation — needs lookahead past the `_ws` (3+ arm alternations).
+    [$.alternation],
+  ],
+
+  rules: {
+    // Top level is a space-separated sequence; alternation only appears inside
+    // sections (per spec). Leading/trailing whitespace is tolerated.
+    root: ($) => seq(optional($._ws), optional($._sequence), optional($._ws)),
+
+    _ws: () => /[ \t\r\n]+/,
+
+    _sequence: ($) => seq($._element, repeat(seq($._ws, $._element))),
+
+    _element: ($) => choice($.note, $.section),
+
+    // atomic_element = [prefix] [index] [suffix] [repeat] [info]
+    note: ($) => seq($._note_core, optional($.repeat), optional($.info)),
+    // Explicit orderings guarantee at least one part (avoids empty match) and
+    // allow bare prefix (`x`), bare index (`14`), and `c4`, `c4sus`, etc.
+    _note_core: ($) =>
+      choice(
+        seq($.prefix, optional($.index), optional($.suffix)),
+        seq($.index, optional($.suffix)),
+      ),
+
+    // section = "(" content ")" [suffix] [repeat] [info]
+    section: ($) =>
+      seq(
+        "(",
+        optional($._ws),
+        optional($._section_body),
+        optional($._ws),
+        ")",
+        optional($.suffix),
+        optional($.repeat),
+        optional($.info),
+      ),
+    _section_body: ($) => choice($.alternation, $._sequence),
+    // alternation = sequence { "/" sequence }
+    alternation: ($) =>
+      seq($._sequence, repeat1(seq($._ws, "/", $._ws, $._sequence))),
+
+    // repeat = "*" number
+    repeat: ($) => seq("*", $.index),
+
+    // info = ":" args
+    info: ($) => seq(":", $.args),
+    args: ($) => seq($.arg, repeat(seq(",", $.arg))),
+    // arg = [name] [operator] number [ref]
+    arg: ($) =>
+      seq(
+        optional($.arg_name),
+        optional($.operator),
+        $.number,
+        optional($.ref),
+      ),
+    operator: () => choice("+", "-", "*", "="),
+
+    prefix: () => /[a-zA-Z_.]+/,
+    suffix: () => /[a-zA-Z_]+/,
+    arg_name: () => /[a-zA-Z]+/,
+    ref: () => /[a-zA-Z]+/,
+    index: () => /[0-9]+(\.[0-9]+)?/,
+    number: () => /[0-9]+(\.[0-9]+)?/,
   },
 });

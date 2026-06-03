@@ -1,0 +1,115 @@
+==================
+Unnamed argument
+==================
+
+c:0.5
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (number))))))
+
+==================
+Named argument
+==================
+
+c:amp0.5
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))))))
+
+==================
+Multiple arguments
+==================
+
+c:amp0.5,dur2
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))
+        (arg
+          (arg_name)
+          (number))))))
+
+==================
+Argument operators
+==================
+
+c:amp+0.2 d:amp-0.1 e:amp*2 f:amp=0.5
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (operator)
+          (number)))))
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (operator)
+          (number)))))
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (operator)
+          (number)))))
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (operator)
+          (number))))))
+
+==================
+Argument reference
+==================
+
+c:time1.0,sus0.5time
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))
+        (arg
+          (arg_name)
+          (number)
+          (ref))))))

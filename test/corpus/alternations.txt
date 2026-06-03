@@ -1,0 +1,139 @@
+==================
+Two-arm alternation
+==================
+
+(a / b)
+
+---
+
+(root
+  (section
+    (alternation
+      (note
+        (prefix))
+      (note
+        (prefix)))))
+
+==================
+Three-arm alternation with repetition
+==================
+
+(a / b / c)*6
+
+---
+
+(root
+  (section
+    (alternation
+      (note
+        (prefix))
+      (note
+        (prefix))
+      (note
+        (prefix)))
+    (repeat
+      (index))))
+
+==================
+Alternation of sequences
+==================
+
+(a b / c d)*2
+
+---
+
+(root
+  (section
+    (alternation
+      (note
+        (prefix))
+      (note
+        (prefix))
+      (note
+        (prefix))
+      (note
+        (prefix)))
+    (repeat
+      (index))))
+
+==================
+Nested alternation inside section
+==================
+
+(c d (e f / g)):amp0.5
+
+---
+
+(root
+  (section
+    (note
+      (prefix))
+    (note
+      (prefix))
+    (section
+      (alternation
+        (note
+          (prefix))
+        (note
+          (prefix))
+        (note
+          (prefix))))
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))))))
+
+==================
+Complex spec example
+==================
+
+c3:sus3.4 c3:0.5 (a3 / b3:sus+1 / f3 / g3)*2:0.5,sus0.2
+
+---
+
+(root
+  (note
+    (prefix)
+    (index)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number)))))
+  (note
+    (prefix)
+    (index)
+    (info
+      (args
+        (arg
+          (number)))))
+  (section
+    (alternation
+      (note
+        (prefix)
+        (index))
+      (note
+        (prefix)
+        (index)
+        (info
+          (args
+            (arg
+              (arg_name)
+              (operator)
+              (number)))))
+      (note
+        (prefix)
+        (index))
+      (note
+        (prefix)
+        (index)))
+    (repeat
+      (index))
+    (info
+      (args
+        (arg
+          (number))
+        (arg
+          (arg_name)
+          (number))))))

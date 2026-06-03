@@ -1,0 +1,114 @@
+==================
+Basic section
+==================
+
+(c d e)
+
+---
+
+(root
+  (section
+    (note
+      (prefix))
+    (note
+      (prefix))
+    (note
+      (prefix))))
+
+==================
+Section with args (inherited)
+==================
+
+(c d e):amp0.5
+
+---
+
+(root
+  (section
+    (note
+      (prefix))
+    (note
+      (prefix))
+    (note
+      (prefix))
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))))))
+
+==================
+Section with suffix
+==================
+
+(a b)sus:amp0.5
+
+---
+
+(root
+  (section
+    (note
+      (prefix))
+    (note
+      (prefix))
+    (suffix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))))))
+
+==================
+Section repetition
+==================
+
+(a b)*2
+
+---
+
+(root
+  (section
+    (note
+      (prefix))
+    (note
+      (prefix))
+    (repeat
+      (index))))
+
+==================
+Element args override section args
+==================
+
+(c:amp0.8 d e):amp0.5
+
+---
+
+(root
+  (section
+    (note
+      (prefix)
+      (info
+        (args
+          (arg
+            (arg_name)
+            (number)))))
+    (note
+      (prefix))
+    (note
+      (prefix))
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))))))
+
+==================
+Empty section
+==================
+
+()
+
+---
+
+(root
+  (section))

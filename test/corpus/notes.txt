@@ -1,0 +1,97 @@
+==================
+Basic prefix notes
+==================
+
+c d e f
+
+---
+
+(root
+  (note
+    (prefix))
+  (note
+    (prefix))
+  (note
+    (prefix))
+  (note
+    (prefix)))
+
+==================
+Prefix with index
+==================
+
+c4 d4 e4 f4
+
+---
+
+(root
+  (note
+    (prefix)
+    (index))
+  (note
+    (prefix)
+    (index))
+  (note
+    (prefix)
+    (index))
+  (note
+    (prefix)
+    (index)))
+
+==================
+Bare prefix (rest / sample marker)
+==================
+
+x
+
+---
+
+(root
+  (note
+    (prefix)))
+
+==================
+Bare indices
+==================
+
+14 14 26 32
+
+---
+
+(root
+  (note
+    (index))
+  (note
+    (index))
+  (note
+    (index))
+  (note
+    (index)))
+
+==================
+Note with suffix
+==================
+
+c4sus
+
+---
+
+(root
+  (note
+    (prefix)
+    (index)
+    (suffix)))
+
+==================
+Note repetition
+==================
+
+a*3
+
+---
+
+(root
+  (note
+    (prefix)
+    (repeat
+      (index))))
