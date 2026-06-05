@@ -112,3 +112,38 @@ Empty section
 
 (root
   (section))
+
+==================
+Section with raw info (non-args)
+==================
+
+():fff
+
+---
+
+(root
+  (section
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number
+            (MISSING "index_token1")))))))
+
+==================
+Section with raw info falls back to top-level error
+==================
+
+(a b):ss*s
+
+---
+
+(root
+  (section
+    (note
+      (prefix))
+    (note
+      (prefix)))
+  (ERROR
+    (arg_name)
+    (operator)))

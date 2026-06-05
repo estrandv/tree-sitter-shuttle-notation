@@ -91,10 +91,16 @@ module.exports = grammar({
       ),
     operator: () => choice("+", "-", "*", "="),
 
-    prefix: () => /[a-zA-Z_.]+/,
-    suffix: () => /[a-zA-Z_]+/,
-    arg_name: () => /[a-zA-Z]+/,
-    ref: () => /[a-zA-Z]+/,
+    // Prefix is alpha+underscore only (digits belong to index, not prefix).
+    prefix: () => /[a-zA-Z_]+/,
+    // Suffix can use full identifier (digits allowed — no adjacent index to
+    // compete with: suffix follows index or stands alone).
+    suffix: () => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    // Arg_name is alpha+underscore only to avoid ambiguity with adjacent
+    // numbers: in `amp0.5`, alpha-only match gives arg_name="amp" number="0.5".
+    arg_name: () => /[a-zA-Z_]+/,
+    // Ref follows a number, so no ambiguity — can use full identifier.
+    ref: () => /[a-zA-Z_][a-zA-Z0-9_]*/,
     index: () => /[0-9]+(\.[0-9]+)?/,
     number: () => /[0-9]+(\.[0-9]+)?/,
   },

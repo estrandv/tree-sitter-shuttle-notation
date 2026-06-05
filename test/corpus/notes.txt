@@ -95,3 +95,67 @@ a*3
     (prefix)
     (repeat
       (index))))
+
+==================
+Prefix with underscore
+==================
+
+a_1
+
+---
+
+(root
+  (note
+    (prefix)
+    (index)))
+
+==================
+Underscore-only prefix
+==================
+
+_a4
+
+---
+
+(root
+  (note
+    (prefix)
+    (index)))
+
+==================
+Bare string treated as prefix
+==================
+
+x:16
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (number))))))
+
+==================
+Bare prefix only
+==================
+
+a
+
+---
+
+(root
+  (note
+    (prefix)))
+
+==================
+Empty source
+==================
+
+
+
+---
+
+(root)

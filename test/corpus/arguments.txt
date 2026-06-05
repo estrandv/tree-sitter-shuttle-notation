@@ -113,3 +113,38 @@ c:time1.0,sus0.5time
           (arg_name)
           (number)
           (ref))))))
+
+==================
+Arg name with underscore
+==================
+
+c:amp_0.5
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number))))))
+
+==================
+Ref with underscore
+==================
+
+c:sus0.5time_2
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (arg_name)
+          (number)
+          (ref))))))

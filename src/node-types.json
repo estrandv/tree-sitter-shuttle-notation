@@ -127,6 +127,11 @@
     "fields": {}
   },
   {
+    "type": "prefix",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "ref",
     "named": true,
     "fields": {}
@@ -202,6 +207,11 @@
     }
   },
   {
+    "type": "suffix",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "(",
     "named": false
   },
@@ -236,13 +246,5 @@
   {
     "type": "=",
     "named": false
-  },
-  {
-    "type": "prefix",
-    "named": true
-  },
-  {
-    "type": "suffix",
-    "named": true
   }
 ]
