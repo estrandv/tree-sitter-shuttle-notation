@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(tree-sitter-tree-sitter-shuttle-notation
-        VERSION "0.2.0"
-        DESCRIPTION "Tree sitter for shuttle notation"
+project(tree-sitter-shuttle-notation
+        VERSION "0.3.0"
+        DESCRIPTION "Tree-sitter grammar for Shuttle Notation"
         HOMEPAGE_URL "https://github.com/estrandv/tree-sitter-shuttle-notation"
         LANGUAGES C)
 
@@ -24,37 +24,37 @@ add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/src/parser.c"
                    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
                    COMMENT "Generating parser.c")
 
-add_library(tree-sitter-tree-sitter-shuttle-notation src/parser.c)
+add_library(tree-sitter-shuttle-notation src/parser.c)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/scanner.c)
-  target_sources(tree-sitter-tree-sitter-shuttle-notation PRIVATE src/scanner.c)
+  target_sources(tree-sitter-shuttle-notation PRIVATE src/scanner.c)
 endif()
-target_include_directories(tree-sitter-tree-sitter-shuttle-notation
+target_include_directories(tree-sitter-shuttle-notation
                            PRIVATE src
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bindings/c>
                                      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-target_compile_definitions(tree-sitter-tree-sitter-shuttle-notation PRIVATE
+target_compile_definitions(tree-sitter-shuttle-notation PRIVATE
                            $<$<BOOL:${TREE_SITTER_REUSE_ALLOCATOR}>:TREE_SITTER_REUSE_ALLOCATOR>
                            $<$<CONFIG:Debug>:TREE_SITTER_DEBUG>)
 
-set_target_properties(tree-sitter-tree-sitter-shuttle-notation
+set_target_properties(tree-sitter-shuttle-notation
                       PROPERTIES
                       C_STANDARD 11
                       POSITION_INDEPENDENT_CODE ON
                       SOVERSION "${TREE_SITTER_ABI_VERSION}.${PROJECT_VERSION_MAJOR}"
                       DEFINE_SYMBOL "")
 
-configure_file(bindings/c/tree-sitter-tree-sitter-shuttle-notation.pc.in
-               "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-tree-sitter-shuttle-notation.pc" @ONLY)
+configure_file(bindings/c/tree-sitter-shuttle-notation.pc.in
+               "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-shuttle-notation.pc" @ONLY)
 
 include(GNUInstallDirs)
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bindings/c/tree_sitter"
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
         FILES_MATCHING PATTERN "*.h")
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-tree-sitter-shuttle-notation.pc"
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-shuttle-notation.pc"
         DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig")
-install(TARGETS tree-sitter-tree-sitter-shuttle-notation
+install(TARGETS tree-sitter-shuttle-notation
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 file(GLOB QUERIES queries/*.scm)

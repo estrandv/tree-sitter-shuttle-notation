@@ -8,7 +8,7 @@
 // @ts-check
 
 /*
-  Shuttle Notation — see shuttle-notation-python/LANGUAGE_SPEC.md
+  Shuttle Notation — see LANGUAGE_SPEC.md
 
   This grammar exists for editor highlighting: it parses STRUCTURE and labels
   nodes. Semantic resolution (argument inheritance, alternation expansion,

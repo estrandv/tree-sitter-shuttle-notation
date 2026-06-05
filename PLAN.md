@@ -8,7 +8,7 @@ Create two separate tree-sitter parser packages:
 ## Current State Analysis
 
 ### Current Repository
-- Name: `tree-sitter-tree-sitter-shuttle-notation`
+- Name: `tree-sitter-shuttle-notation`
 - Status: Basic Shuttle grammar implemented but incomplete
 - Missing features per TODOs in grammar.js:
   - `*` repetition operator support
@@ -179,7 +179,7 @@ rules: {
 ## Technical Decisions to Make
 
 ### Decision 1: Shuttle Repo Naming
-- **Option A**: Keep `tree-sitter-tree-sitter-shuttle-notation` (current)
+- **Option B**: Use `tree-sitter-shuttle-notation` (current)
 - **Option B**: Rename to `tree-sitter-shuttle-notation` (cleaner)
 - **Recommendation**: Option B
 

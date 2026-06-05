@@ -2,9 +2,9 @@ ifeq ($(OS),Windows_NT)
 $(error Windows is not supported)
 endif
 
-LANGUAGE_NAME := tree-sitter-tree-sitter-shuttle-notation
+LANGUAGE_NAME := tree-sitter-shuttle-notation
 HOMEPAGE_URL := https://github.com/estrandv/tree-sitter-shuttle-notation
-VERSION := 0.2.0
+VERSION := 0.3.0
 
 # repository
 SRC_DIR := src

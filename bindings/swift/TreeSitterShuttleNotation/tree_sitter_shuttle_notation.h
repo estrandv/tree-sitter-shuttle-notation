@@ -7,7 +7,7 @@ typedef struct TSLanguage TSLanguage;
 extern "C" {
 #endif
 
-const TSLanguage *tree_sitter_tree_sitter_shuttle_notation(void);
+const TSLanguage *tree_sitter_shuttle(void);
 
 #ifdef __cplusplus
 }

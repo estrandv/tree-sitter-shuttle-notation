@@ -1,11 +1,11 @@
 [package]
-name = "tree-sitter-tree-sitter-shuttle-notation"
-description = "Tree sitter for shuttle notation"
-version = "0.2.0"
+name = "tree-sitter-shuttle-notation"
+description = "Tree-sitter grammar for Shuttle Notation"
+version = "0.3.0"
 authors = ["estrandv <emil.strandvik@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-keywords = ["incremental", "parsing", "tree-sitter", "tree-sitter-shuttle-notation"]
+keywords = ["incremental", "parsing", "tree-sitter", "shuttle-notation"]
 categories = ["parser-implementations", "parsing", "text-editors"]
 repository = "https://github.com/estrandv/tree-sitter-shuttle-notation"
 edition = "2021"
