@@ -1,3 +1,13 @@
+# Shuttle Notation
+
+Tree-sitter grammar for [Shuttle Notation](https://github.com/estrandv/shuttle-notation-python) — a domain-specific language for defining sequential data with rich metadata (indices, named arguments, alternations, repetition, and section inheritance).
+
+This repository is the canonical language specification. Parsing is handled by the reference Python implementation at [shuttle-notation-python](https://github.com/estrandv/shuttle-notation-python).
+
+MIT — Copyright (c) 2026 Emil Strandvik
+
+---
+
 # Shuttle Notation Language Specification
 
 **Version:** 1.0  
