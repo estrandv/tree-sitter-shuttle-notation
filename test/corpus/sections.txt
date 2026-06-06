@@ -146,4 +146,5 @@ Section with raw info falls back to top-level error
       (prefix)))
   (ERROR
     (arg_name)
-    (operator)))
+    (operator)
+    (prefix)))

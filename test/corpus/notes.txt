@@ -151,6 +151,42 @@ a
     (prefix)))
 
 ==================
+Macro prefix ($)
+==================
+
+$dr_husky $pt_chimp
+
+---
+
+(root
+  (note
+    (prefix))
+  (note
+    (prefix)))
+
+==================
+Loop marker prefix (§)
+==================
+
+§:0 §:1
+
+---
+
+(root
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (number)))))
+  (note
+    (prefix)
+    (info
+      (args
+        (arg
+          (number))))))
+
+==================
 Empty source
 ==================
 

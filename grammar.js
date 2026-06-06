@@ -46,7 +46,7 @@ module.exports = grammar({
 
     _sequence: ($) => seq($._element, repeat(seq($._ws, $._element))),
 
-    _element: ($) => choice($.note, $.section),
+    _element: ($) => choice($.note, $.section, $.symbol),
 
     // atomic_element = [prefix] [index] [suffix] [repeat] [info]
     note: ($) => seq($._note_core, optional($.repeat), optional($.info)),
@@ -91,8 +91,14 @@ module.exports = grammar({
       ),
     operator: () => choice("+", "-", "*", "="),
 
-    // Prefix is alpha+underscore only (digits belong to index, not prefix).
-    prefix: () => /[a-zA-Z_]+/,
+    // Symbol: rest/skip marker (bare dot).
+    symbol: () => ".",
+    // Prefix: any non-breaking character except shuttle syntax and digits.
+    // Excludes: whitespace, digits (so `c4` = prefix `c` + index `4`),
+    // section/alternation/info/repeat delimiters, arg operators, and `.`
+    // (which is its own symbol rule). Everything else is fair game:
+    // `$dr_husky`, `§`, `€`, `f#5`, `_`, `¶`, etc.
+    prefix: () => /[^\s\d:()/*,+\-=.][^\s\d:()/*+\-=.]*/,
     // Suffix can use full identifier (digits allowed — no adjacent index to
     // compete with: suffix follows index or stands alone).
     suffix: () => /[a-zA-Z_][a-zA-Z0-9_]*/,

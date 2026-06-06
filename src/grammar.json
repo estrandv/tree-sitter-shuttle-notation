@@ -82,6 +82,10 @@
         {
           "type": "SYMBOL",
           "name": "section"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "symbol"
         }
       ]
     },
@@ -425,9 +429,13 @@
         }
       ]
     },
+    "symbol": {
+      "type": "STRING",
+      "value": "."
+    },
     "prefix": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_]+"
+      "value": "[^\\s\\d:()/*,+\\-=.][^\\s\\d:()/*+\\-=.]*"
     },
     "suffix": {
       "type": "PATTERN",
